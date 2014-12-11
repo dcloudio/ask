@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+    </script>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">标题</h1>
+	</header>
+	<div class="mui-content">
+		<div style="margin: 20px 15px;">这是b页面；</div>
+		<button id="btn" class="mui-btn mui-btn-blue mui-btn-block">打开C页面</button>
+	</div>
+	<script type="text/javascript">
+		var oldback = mui.back;
+		mui.back = function(){
+		    //恢复a页面的显示状态；
+		    mui.currentWebview.opener().show('none');
+		    //继续执行b页面原有的返回逻辑
+		    oldback();
+		}
+		
+		document.getElementById("btn").addEventListener('tap',function () {
+			//打开b页面
+			mui.openWindow({
+			    url:'c.html',
+			    id:'c.html'
+			});
+			//等b页面显示动画结束后，隐藏a页面；如下示例中的300毫秒，可根据b页面真实显示动画时间调整
+			setTimeout(function(){
+			    mui.currentWebview.hide('none');
+			},500);
+		});
+		
+	</script>
+</body>
+</html>
